@@ -113,6 +113,7 @@ function App() {
         return;
       }
     };
+    handleCloseMovie();
     fetchMovies();
     return function () {
       controller.abort();
@@ -196,6 +197,22 @@ const MovieDetails = ({ selectedId, oncloseMovie, onaddWatched, watched }) => {
     onaddWatched(newWatchedmovie);
     oncloseMovie();
   };
+   useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          oncloseMovie();
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [oncloseMovie]
+  );
   useEffect(() => {
     const GetMovieDeatils = async () => {
       setIsLoading(true);
