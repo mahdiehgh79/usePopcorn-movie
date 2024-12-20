@@ -1,5 +1,6 @@
 import { useEffect, useState,useRef } from "react";
 import StarRating from "./starrating.jsx";
+import useLocalStorageState from "./useLocalStorageState.jsx";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -59,13 +60,15 @@ function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-  const [watched, setWatched] = useState(() => {
-    const storedValue = localStorage.getItem("watched");
-    // If storedValue is null or not an array, return an empty array
-    return Array.isArray(JSON.parse(storedValue))
-      ? JSON.parse(storedValue)
-      : [];
-  });
+  // const [watched, setWatched] = useState(() => {
+  //   const storedValue = localStorage.getItem("watched");
+  //   // If storedValue is null or not an array, return an empty array
+  //   return Array.isArray(JSON.parse(storedValue))
+  //     ? JSON.parse(storedValue)
+  //     : [];
+  // });
+
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   const handleSelectMovie = (id) => {
     setSelectedId(id);
