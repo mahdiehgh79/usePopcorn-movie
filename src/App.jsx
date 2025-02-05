@@ -1,6 +1,7 @@
 import { useEffect, useState,useRef } from "react";
 import StarRating from "./starrating.jsx";
 import useLocalStorageState from "./useLocalStorageState.jsx";
+import { useKey } from "./useKey.jsx";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -214,22 +215,24 @@ const MovieDetails = ({ selectedId, oncloseMovie, onaddWatched, watched }) => {
     onaddWatched(newWatchedmovie);
     oncloseMovie();
   };
-   useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          oncloseMovie();
-        }
-      }
 
-      document.addEventListener("keydown", callback);
+  useKey("Escape", oncloseMovie);
+  //  useEffect(
+  //   function () {
+  //     function callback(e) {
+  //       if (e.code === "Escape") {
+  //         oncloseMovie();
+  //       }
+  //     }
 
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-    [oncloseMovie]
-  );
+  //     document.addEventListener("keydown", callback);
+
+  //     return function () {
+  //       document.removeEventListener("keydown", callback);
+  //     };
+  //   },
+  //   [oncloseMovie]
+  // );
   useEffect(() => {
     const GetMovieDeatils = async () => {
       setIsLoading(true);
